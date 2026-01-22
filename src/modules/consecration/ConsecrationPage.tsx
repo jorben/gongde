@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Cpu, Award, Smartphone, Calendar, Tag } from 'lucide-react'
+import { Sparkles, Cpu, Award, Smartphone, Calendar, Tag, MapPin } from 'lucide-react'
 
 const DEVICES = [
   { id: '1', name: '智能佛珠手串', type: '手串', icon: <Cpu /> },
@@ -180,6 +180,48 @@ export const ConsecrationPage = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* 开光地图模块 */}
+        <div className="zen-card p-0 overflow-hidden relative">
+          {/* 地图背景 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-zen-gold/5 via-zen-bg to-zen-gold/10">
+            {/* 模拟地图网格线 */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="h-full w-full" style={{
+                backgroundImage: `
+                  linear-gradient(rgba(212, 175, 55, 0.3) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(212, 175, 55, 0.3) 1px, transparent 1px)
+                `,
+                backgroundSize: '30px 30px'
+              }} />
+            </div>
+            {/* 模拟地图标记点 - 调整位置避免遮挡 */}
+            <div className="absolute top-4 left-6 w-2 h-2 bg-zen-gold rounded-full animate-pulse" />
+            <div className="absolute top-8 left-1/2 w-2 h-2 bg-zen-pink rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="absolute top-16 left-10 w-2 h-2 bg-zen-gold rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+            <div className="absolute top-12 left-1/4 w-2 h-2 bg-zen-pink rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
+            <div className="absolute top-6 left-1/3 w-3 h-3 bg-zen-gold rounded-full animate-pulse shadow-lg shadow-zen-gold/50" />
+          </div>
+          
+          {/* 内容 */}
+          <div className="relative z-10 p-5 space-y-3">
+            <h3 className="text-lg font-serif font-bold text-zen-text flex items-center gap-2">
+              <div className="w-8 h-8 bg-zen-gold/20 rounded-full flex items-center justify-center">
+                <MapPin size={18} className="text-zen-gold" strokeWidth={2} />
+              </div>
+              <span>开光地图</span>
+            </h3>
+            <p className="text-sm text-zen-text/60 leading-relaxed pl-10">
+              绑定智能硬件，寻找附近线下可开光的地点
+            </p>
+            <div className="flex justify-end">
+              <button className="px-4 py-2 bg-zen-gold/10 text-zen-gold rounded-full text-xs font-bold hover:bg-zen-gold hover:text-white transition-all flex items-center gap-1.5">
+                <MapPin size={12} />
+                查看地图
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
