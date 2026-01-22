@@ -264,14 +264,14 @@ export const WorshipPage = () => {
             rows={isInputFocused ? 3 : 1}
             disabled={wishExhausted}
           />
-          {/* 预设心愿标签 */}
-          <div className="flex flex-wrap gap-2">
+          {/* 预设心愿标签 - 横向滚动 */}
+          <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
             {presetWishes.map((presetWish, index) => (
               <button
                 key={index}
                 onClick={() => !wishExhausted && setWish(presetWish)}
                 disabled={wishExhausted}
-                className={`px-3 py-1.5 text-xs rounded-full transition-all ${
+                className={`px-3 py-1.5 text-xs rounded-full transition-all whitespace-nowrap flex-shrink-0 ${
                   wishExhausted
                     ? 'bg-zen-text/5 text-zen-text/20 cursor-not-allowed'
                     : wish === presetWish
