@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gongde-gold: #D4AF37;
+  --color-gongde-red: #8B0000;
+  --color-gongde-brown: #3E2723;
+  --color-gongde-yellow: #FFD700;
+}
+
+:root {
+  --gongde-red: #8B0000;
+  --gongde-gold: #D4AF37;
+  --gongde-brown: #3E2723;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--gongde-brown);
+  color: white;
+  font-family: 'Noto Serif SC', serif;
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gongde-gold text-gongde-brown px-4 py-2 rounded-md font-bold hover:bg-gongde-yellow transition-colors;
+  }
+}
