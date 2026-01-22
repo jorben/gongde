@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Play, Pause, BookOpen, Music, CheckCircle2 } from 'lucide-react'
 
 const SUTRAS = [
@@ -11,95 +11,116 @@ const SUTRAS = [
 export const HomeworkPage = () => {
   const [selectedSutra, setSelectedSutra] = useState<typeof SUTRAS[0] | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   if (selectedSutra) {
     return (
-      <div className="flex flex-col h-screen bg-gongde-brown p-6 pb-24">
+      <div className="flex flex-col h-[calc(100dvh-7rem)] bg-zen-bg -mx-4 -mt-6 px-4 pt-4">
         <button 
           onClick={() => { setSelectedSutra(null); setIsPlaying(false); }}
-          className="text-gongde-gold mb-6 self-start flex items-center gap-1"
+          className="text-zen-gold mb-4 self-start flex items-center gap-2 font-medium text-sm"
         >
-          ← 返回列表
+          <span className="text-lg">←</span>
+          <span>返回修行</span>
         </button>
         
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-serif text-gongde-gold mb-2">{selectedSutra.name}</h2>
-          <div className="flex justify-center gap-4 text-xs opacity-60">
-            <span>时长: {selectedSutra.duration}</span>
-            <span>难度: {selectedSutra.difficulty}</span>
+        <div className="text-center mb-4 space-y-1">
+          <h2 className="text-3xl font-serif text-zen-text tracking-[0.2em]">{selectedSutra.name}</h2>
+          <div className="flex justify-center gap-4 text-[10px] text-zen-text/40 tracking-widest">
+            <span className="flex items-center gap-1"><BookOpen size={10} /> {selectedSutra.duration}</span>
+            <span className="flex items-center gap-1"><Sparkles size={10} /> {selectedSutra.difficulty}</span>
           </div>
         </div>
 
-        <div className="flex-1 bg-black/30 rounded-2xl p-6 overflow-y-auto relative border border-gongde-gold/10">
+        <div className="flex-1 zen-card p-5 overflow-y-auto relative bg-white/40 border-none shadow-inner min-h-0">
           <motion.div
             initial={{ y: 0 }}
             animate={isPlaying ? { y: -2000 } : {}}
             transition={{ duration: 60, ease: "linear" }}
-            className="text-xl leading-relaxed text-center font-serif text-gongde-gold/80"
+            className="text-lg leading-[2.2] text-center font-serif text-zen-text/80 tracking-widest"
           >
-            {selectedSutra.content.repeat(10)}
+            {selectedSutra.content.split('。').map((sentence, i) => (
+              <p key={i} className="mb-3">{sentence}{sentence && '。'}</p>
+            ))}
+            {selectedSutra.content.repeat(5).split('。').map((sentence, i) => (
+              <p key={i} className="mb-3">{sentence}{sentence && '。'}</p>
+            ))}
           </motion.div>
         </div>
 
-        <div className="mt-8 flex justify-center items-center gap-8">
-          <button className="text-white/40"><Music size={24} /></button>
+        <div className="py-4 flex justify-center items-center gap-10 flex-shrink-0">
+          <button className="text-zen-text/20 hover:text-zen-gold transition-colors"><Music size={22} /></button>
           <button 
             onClick={() => setIsPlaying(!isPlaying)}
-            className="w-16 h-16 bg-gongde-gold rounded-full flex items-center justify-center text-gongde-brown shadow-lg shadow-gongde-gold/20"
+            className="w-16 h-16 bg-zen-gold rounded-full flex items-center justify-center text-white shadow-xl shadow-zen-gold/30 transition-transform active:scale-90"
           >
-            {isPlaying ? <Pause size={32} fill="currentColor" /> : <Play size={32} fill="currentColor" className="ml-1" />}
+            {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}
           </button>
-          <button className="text-white/40"><CheckCircle2 size={24} /></button>
+          <button className="text-zen-text/20 hover:text-zen-green transition-colors"><CheckCircle2 size={22} /></button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold text-gongde-gold mb-8 text-center">功课修行</h1>
+    <div className="space-y-6 pb-4">
+      <div className="text-center space-y-1">
+        <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">功课修行</h1>
+        <p className="text-[10px] text-zen-text/40 italic">" 每日一课，积沙成塔 "</p>
+      </div>
       
       <div className="space-y-4">
-        <div className="flex gap-4 border-b border-white/10 pb-2 mb-4">
-          <button className="text-gongde-gold border-b-2 border-gongde-gold pb-2 font-bold">经书列表</button>
-          <button className="text-white/40 pb-2">佛教音乐</button>
+        <div className="flex gap-6 border-b border-zen-text/5 pb-1">
+          <button className="text-zen-gold border-b-2 border-zen-gold pb-2 font-bold tracking-widest text-sm transition-all">经书列表</button>
+          <button className="text-zen-text/30 pb-2 text-sm tracking-widest hover:text-zen-text transition-all">佛教音乐</button>
         </div>
 
-        {SUTRAS.map((sutra) => (
-          <motion.div
-            key={sutra.id}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setSelectedSutra(sutra)}
-            className="bg-black/20 border border-white/10 p-4 rounded-xl flex items-center justify-between cursor-pointer"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gongde-red rounded-lg flex items-center justify-center text-gongde-gold">
-                <BookOpen size={24} />
+        <div className="space-y-3">
+          {SUTRAS.map((sutra) => (
+            <motion.div
+              key={sutra.id}
+              whileHover={{ scale: 1.01, x: 2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setSelectedSutra(sutra)}
+              className="zen-card p-4 flex items-center justify-between cursor-pointer group hover:bg-white transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-zen-gold/10 rounded-xl flex items-center justify-center text-zen-gold group-hover:bg-zen-gold group-hover:text-white transition-all">
+                  <BookOpen size={24} strokeWidth={1.5} />
+                </div>
+                <div className="space-y-0.5">
+                  <h3 className="font-serif font-bold text-lg text-zen-text">{sutra.name}</h3>
+                  <div className="flex items-center gap-2 text-[10px] text-zen-text/40">
+                    <span>{sutra.duration}</span>
+                    <span className="w-1 h-1 bg-zen-text/10 rounded-full" />
+                    <span>{sutra.difficulty}</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="font-bold text-lg text-gongde-gold">{sutra.name}</h3>
-                <p className="text-xs opacity-40">时长: {sutra.duration} | 难度: {sutra.difficulty}</p>
+              <div className="w-9 h-9 rounded-full bg-zen-bg flex items-center justify-center text-zen-gold/40 group-hover:text-zen-gold transition-all">
+                <Play size={18} fill="currentColor" />
               </div>
-            </div>
-            <Play size={20} className="text-gongde-gold opacity-40" />
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-12 bg-gongde-red/30 p-6 rounded-2xl border border-gongde-gold/20">
-        <h4 className="text-gongde-gold font-bold mb-2 flex items-center gap-2">
+      <div className="zen-card p-6 bg-zen-gold/5 border-none shadow-none relative overflow-hidden">
+        {/* Decorative Element */}
+        <div className="absolute top-0 right-0 p-2 opacity-5">
+          <BookOpen size={80} />
+        </div>
+
+        <h4 className="text-zen-gold font-serif font-bold mb-4 flex items-center gap-2 text-base">
           <Sparkles size={16} /> 修行统计
         </h4>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center p-3 bg-black/20 rounded-lg">
-            <div className="text-2xl font-bold text-gongde-gold">0</div>
-            <div className="text-[10px] opacity-40">累计功课 (次)</div>
+        <div className="grid grid-cols-2 gap-6 relative z-10">
+          <div className="space-y-0.5">
+            <div className="text-2xl font-serif font-bold text-zen-text">0</div>
+            <div className="text-[9px] text-zen-text/40 tracking-[0.15em] uppercase">累计功课 (次)</div>
           </div>
-          <div className="text-center p-3 bg-black/20 rounded-lg">
-            <div className="text-2xl font-bold text-gongde-gold">0</div>
-            <div className="text-[10px] opacity-40">修行时长 (分)</div>
+          <div className="space-y-0.5">
+            <div className="text-2xl font-serif font-bold text-zen-text">0</div>
+            <div className="text-[9px] text-zen-text/40 tracking-[0.15em] uppercase">修行时长 (分)</div>
           </div>
         </div>
       </div>

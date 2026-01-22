@@ -1,28 +1,52 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gongde-gold: #D4AF37;
-  --color-gongde-red: #8B0000;
-  --color-gongde-brown: #3E2723;
-  --color-gongde-yellow: #FFD700;
+  --color-zen-bg: #F9F7F2;
+  --color-zen-text: #3D3D3D;
+  --color-zen-gold: #C5A059;
+  --color-zen-green: #8E9E82;
+  --color-zen-pink: #D9A7A7;
+  --color-zen-container: rgba(255, 255, 255, 0.8);
+  --radius-zen: 24px;
+  --blur-zen: 12px;
 }
 
 :root {
-  --gongde-red: #8B0000;
-  --gongde-gold: #D4AF37;
-  --gongde-brown: #3E2723;
+  --zen-bg: #F9F7F2;
+  --zen-text: #3D3D3D;
+  --zen-gold: #C5A059;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--gongde-brown);
-  color: white;
-  font-family: 'Noto Serif SC', serif;
+  background-color: var(--zen-bg);
+  color: var(--zen-text);
+  font-family: 'Source Han Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Source Han Serif', 'Noto Serif SC', 'Songti SC', serif;
 }
 
 @layer components {
-  .btn-gold {
-    @apply bg-gongde-gold text-gongde-brown px-4 py-2 rounded-md font-bold hover:bg-gongde-yellow transition-colors;
+  .zen-card {
+    @apply bg-white/80 backdrop-blur-[12px] rounded-[24px] shadow-[0_20px_40px_rgba(0,0,0,0.05)] border border-white/50;
+  }
+  
+  .zen-btn-gold {
+    @apply bg-zen-gold text-white px-6 py-2.5 rounded-full font-medium transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-zen-gold/20;
+  }
+
+  .zen-vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 }

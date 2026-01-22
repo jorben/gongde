@@ -15,7 +15,7 @@ interface UserState {
   consecutiveDays: number
   dailyData: {
     incenseUsed: boolean
-    wishUsed: boolean
+    wishCount: number
     chatCount: number
     lastResetDate: string
   }
@@ -35,7 +35,7 @@ export const useUserStore = create<UserState>()(
       consecutiveDays: 0,
       dailyData: {
         incenseUsed: false,
-        wishUsed: false,
+        wishCount: 0,
         chatCount: 0,
         lastResetDate: new Date().toISOString().split('T')[0],
       },
@@ -58,7 +58,7 @@ export const useUserStore = create<UserState>()(
           },
           dailyData: {
             ...state.dailyData,
-            wishUsed: true,
+            wishCount: state.dailyData.wishCount + 1,
           }
         }))
       },
@@ -66,10 +66,10 @@ export const useUserStore = create<UserState>()(
         const today = new Date().toISOString().split('T')[0]
         const lastReset = get().dailyData.lastResetDate
         if (today !== lastReset) {
-          set((state) => ({
+          set(() => ({
             dailyData: {
               incenseUsed: false,
-              wishUsed: false,
+              wishCount: 0,
               chatCount: 0,
               lastResetDate: today,
             }
@@ -82,6 +82,23 @@ export const useUserStore = create<UserState>()(
     }),
     {
       name: 'gongde-user-storage',
+      migrate: (persistedState: unknown) => {
+        const state = persistedState as Record<string, unknown>
+        if (state?.dailyData) {
+          const dailyData = state.dailyData as Record<string, unknown>
+          // 迁移旧的 wishUsed (boolean) 到 wishCount (number)
+          if (typeof dailyData.wishUsed === 'boolean') {
+            dailyData.wishCount = dailyData.wishUsed ? 1 : 0
+            delete dailyData.wishUsed
+          }
+          // 确保 wishCount 是数字
+          if (typeof dailyData.wishCount !== 'number') {
+            dailyData.wishCount = 0
+          }
+        }
+        return state
+      },
+      version: 1,
     }
   )
 )

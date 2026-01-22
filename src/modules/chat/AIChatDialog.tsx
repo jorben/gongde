@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, X, User, Sparkles } from 'lucide-react'
+import { Send, X, Sparkles } from 'lucide-react'
 import { useUserStore } from '../../store/useUserStore'
 
 interface Message {
@@ -9,7 +9,7 @@ interface Message {
 }
 
 export const AIChatDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const { dailyData, addMerit } = useUserStore()
+  const { dailyData } = useUserStore()
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: '善哉，善哉。施主心中若有困惑，贫僧愿为您指点迷津。' }
   ])
@@ -60,40 +60,40 @@ export const AIChatDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 100, scale: 0.9 }}
+          initial={{ opacity: 0, y: 100, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 100, scale: 0.9 }}
-          className="fixed inset-x-4 bottom-24 top-20 bg-gongde-brown/95 backdrop-blur-xl border-2 border-gongde-gold/30 rounded-3xl shadow-2xl z-[60] flex flex-col overflow-hidden"
+          exit={{ opacity: 0, y: 100, scale: 0.95 }}
+          className="fixed inset-x-4 bottom-24 top-20 bg-white/90 backdrop-blur-2xl border border-white/50 rounded-[32px] shadow-2xl z-[60] flex flex-col overflow-hidden"
         >
           {/* Header */}
-          <div className="p-4 border-b border-gongde-gold/20 flex justify-between items-center bg-gongde-red/20">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gongde-gold rounded-full flex items-center justify-center text-gongde-brown">
-                <Sparkles size={16} />
+          <div className="p-5 border-b border-zen-text/5 flex justify-between items-center bg-white/50">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-zen-gold/10 rounded-2xl flex items-center justify-center text-zen-gold shadow-sm">
+                <Sparkles size={20} strokeWidth={1.5} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-gongde-gold">智慧法师 AI</h3>
-                <p className="text-[10px] opacity-60">今日剩余次数: {10 - dailyData.chatCount}/10</p>
+                <h3 className="text-base font-serif font-bold text-zen-text">智慧法师 AI</h3>
+                <p className="text-[10px] text-zen-text/40 tracking-widest uppercase">今日机缘: {10 - dailyData.chatCount}/10</p>
               </div>
             </div>
-            <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
+            <button onClick={onClose} className="p-2 hover:bg-zen-bg rounded-full transition-colors text-zen-text/20 hover:text-zen-text">
               <X size={20} />
             </button>
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 font-serif">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 font-serif bg-[url('https://www.transparenttextures.com/patterns/handmade-paper.png')] bg-opacity-10">
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
+                <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
                   msg.role === 'user' 
-                    ? 'bg-gongde-gold text-gongde-brown rounded-tr-none' 
-                    : 'bg-white/10 text-white rounded-tl-none border border-white/5'
+                    ? 'bg-zen-gold text-white rounded-tr-none shadow-lg shadow-zen-gold/20' 
+                    : 'bg-white text-zen-text rounded-tl-none shadow-sm border border-zen-text/5'
                 }`}>
                   {msg.content}
                 </div>
@@ -101,31 +101,31 @@ export const AIChatDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none border border-white/5 flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-gongde-gold rounded-full animate-bounce" />
-                  <div className="w-1.5 h-1.5 bg-gongde-gold rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <div className="w-1.5 h-1.5 bg-gongde-gold rounded-full animate-bounce [animation-delay:0.4s]" />
+                <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-zen-text/5 flex gap-1.5">
+                  <div className="w-1.5 h-1.5 bg-zen-gold/40 rounded-full animate-bounce" />
+                  <div className="w-1.5 h-1.5 bg-zen-gold/40 rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <div className="w-1.5 h-1.5 bg-zen-gold/40 rounded-full animate-bounce [animation-delay:0.4s]" />
                 </div>
               </div>
             )}
           </div>
 
           {/* Input */}
-          <div className="p-4 bg-black/20 border-t border-gongde-gold/20">
-            <div className="flex gap-2">
+          <div className="p-5 bg-white border-t border-zen-text/5">
+            <div className="flex gap-3 items-center">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="请输入您的问题..."
-                className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-gongde-gold"
+                placeholder="在此寻求开示..."
+                className="flex-1 bg-zen-bg/50 border-none rounded-full px-5 py-3 text-sm focus:ring-1 focus:ring-zen-gold/30 placeholder:text-zen-text/20 text-zen-text transition-all"
               />
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="w-10 h-10 bg-gongde-gold rounded-full flex items-center justify-center text-gongde-brown disabled:opacity-50"
+                className="w-12 h-12 bg-zen-gold text-white rounded-full flex items-center justify-center shadow-lg shadow-zen-gold/20 disabled:opacity-30 disabled:shadow-none hover:scale-105 active:scale-95 transition-all"
               >
-                <Send size={18} />
+                <Send size={20} strokeWidth={2.5} />
               </button>
             </div>
           </div>
