@@ -63,6 +63,7 @@ export const WorshipPage = () => {
   const [wish, setWish] = useState('')
   const [merits, setMerits] = useState<{ id: number; x: number; y: number }[]>([])
   const [presetWishes, setPresetWishes] = useState<string[]>(() => getRandomWishes(BUDDHAS[0].name))
+  const [isInputFocused, setIsInputFocused] = useState(false)
 
   const wishExhausted = dailyData.wishCount >= MAX_DAILY_WISHES
 
@@ -207,8 +208,13 @@ export const WorshipPage = () => {
           <textarea
             value={wish}
             onChange={(e) => setWish(e.target.value)}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
             placeholder="诚心祈愿，万事顺遂..."
-            className="w-full h-20 bg-zen-bg/50 border-none rounded-xl p-3 text-sm text-zen-text placeholder:text-zen-text/20 focus:ring-1 focus:ring-zen-gold/30 resize-none transition-all"
+            className={`w-full bg-zen-bg/50 border-none rounded-xl p-3 text-sm text-zen-text placeholder:text-zen-text/20 focus:ring-1 focus:ring-zen-gold/30 resize-none transition-all duration-300 ${
+              isInputFocused ? 'h-24' : 'h-10'
+            }`}
+            rows={isInputFocused ? 3 : 1}
             disabled={wishExhausted}
           />
           {/* 预设心愿标签 */}
@@ -248,6 +254,37 @@ export const WorshipPage = () => {
             </>
           )}
         </button>
+
+        {/* 快捷入口 */}
+        <div className="flex justify-center gap-6 pt-2">
+          <button
+            disabled
+            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
+          >
+            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
+              <span className="text-xl">🪔</span>
+            </div>
+            <span className="text-[10px] text-zen-text/60">请香</span>
+          </button>
+          <button
+            disabled
+            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
+          >
+            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
+              <span className="text-xl">🙏</span>
+            </div>
+            <span className="text-[10px] text-zen-text/60">功德</span>
+          </button>
+          <button
+            disabled
+            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
+          >
+            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
+              <span className="text-xl">💝</span>
+            </div>
+            <span className="text-[10px] text-zen-text/60">募捐</span>
+          </button>
+        </div>
       </div>
 
       {/* Footer Quote */}
