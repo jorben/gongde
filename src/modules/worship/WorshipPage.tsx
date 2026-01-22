@@ -201,21 +201,6 @@ export const WorshipPage = () => {
                 />
               </motion.div>
             </AnimatePresence>
-
-            {/* Floating Merits */}
-            <AnimatePresence>
-              {merits.map((m) => (
-                <motion.div
-                  key={m.id}
-                  initial={{ opacity: 0, scale: 0.5, y: 20, x: m.x }}
-                  animate={{ opacity: 1, scale: 1.2, y: m.y }}
-                  exit={{ opacity: 0, scale: 1.5 }}
-                  className="absolute text-duo-yellow font-black text-2xl pointer-events-none whitespace-nowrap z-20 drop-shadow-sm"
-                >
-                  功德 +1
-                </motion.div>
-              ))}
-            </AnimatePresence>
           </div>
         </div>
 
@@ -280,22 +265,41 @@ export const WorshipPage = () => {
           </div>
         </div>
         
-        <button
-          onClick={handleWorship}
-          disabled={wishExhausted}
-          className={`w-full py-5 rounded-[24px] font-black text-xl flex items-center justify-center gap-4 transition-all ${
-            wishExhausted
-              ? 'bg-amber-100/50 text-amber-900/20 border-b-6 border-amber-200 cursor-not-allowed translate-y-[6px]'
-              : 'duo-btn-yellow'
-          }`}
-        >
-          {wishExhausted ? '今日已圆满' : (
-            <>
-              <Sparkles size={22} strokeWidth={3} />
-              <span className="uppercase tracking-wider">祈愿礼拜 ({MAX_DAILY_WISHES - dailyData.wishCount}/{MAX_DAILY_WISHES})</span>
-            </>
-          )}
-        </button>
+        {/* Button with Floating Merits */}
+        <div className="relative">
+          {/* Floating Merits - Above Button */}
+          <AnimatePresence>
+            {merits.map((m) => (
+              <motion.div
+                key={m.id}
+                initial={{ opacity: 0, scale: 0.5, y: 0 }}
+                animate={{ opacity: 1, scale: 1.2, y: -60 }}
+                exit={{ opacity: 0, scale: 0.8, y: -100 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                className="absolute left-1/2 -translate-x-1/2 -top-2 text-duo-yellow font-black text-2xl pointer-events-none whitespace-nowrap z-50 drop-shadow-lg"
+              >
+                功德 +1
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          
+          <button
+            onClick={handleWorship}
+            disabled={wishExhausted}
+            className={`w-full py-5 rounded-[24px] font-black text-xl flex items-center justify-center gap-4 transition-all ${
+              wishExhausted
+                ? 'bg-amber-100/50 text-amber-900/20 border-b-6 border-amber-200 cursor-not-allowed translate-y-[6px]'
+                : 'duo-btn-yellow'
+            }`}
+          >
+            {wishExhausted ? '今日已圆满' : (
+              <>
+                <Sparkles size={22} strokeWidth={3} />
+                <span className="uppercase tracking-wider">祈愿礼拜 ({MAX_DAILY_WISHES - dailyData.wishCount}/{MAX_DAILY_WISHES})</span>
+              </>
+            )}
+          </button>
+        </div>
 
         {/* 快捷入口 */}
         <div className="flex justify-around pt-2">
