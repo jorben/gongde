@@ -52,7 +52,7 @@ export const AIChatButton = ({ onClick, isWorshipPage }: { onClick: () => void; 
     >
       <MessageCircle size={32} strokeWidth={2.5} />
       <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black border-2 border-white shadow-sm">
-        AI
+        AI大师
       </div>
     </motion.button>
   )
