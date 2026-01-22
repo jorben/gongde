@@ -3,25 +3,25 @@
 @theme {
   --color-duo-yellow: #FFB800;
   --color-duo-yellow-dark: #E6A600;
-  --color-duo-yellow-light: #FFD978;
+  --color-duo-yellow-light: #FFFBEB;
   --color-duo-text: #4B3621;
-  --color-duo-text-light: #8B7355;
-  --color-duo-bg: #FFFBEB;
-  --color-duo-bg-dark: #FEF3C7;
+  --color-duo-text-light: #A08B73;
+  --color-duo-bg: #FFFCF2;
+  --color-duo-bg-dark: #FDF6E3;
   --radius-duo: 16px;
   --radius-duo-lg: 24px;
 }
 
 :root {
-  --duo-bg: #FFFBEB;
+  --duo-bg: #FFFCF2;
   --duo-text: #4B3621;
 }
 
 body {
   margin: 0;
   padding: 0;
-  /* 增强背景渐变对比度 */
-  background: radial-gradient(circle at center, #FFFBEB 0%, #FDE68A 100%);
+  /* 调温和渐变，降低对比度 */
+  background: radial-gradient(circle at center, #FFFCF2 0%, #FFF3D6 100%);
   background-attachment: fixed;
   color: var(--duo-text);
   font-family: 'Poppins', 'Nunito', 'Source Han Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -39,63 +39,75 @@ h1, h2, h3, h4 {
   font-weight: 800;
 }
 
-@layer components {
-  /* 增强卡片的 3D 感，使用更实的阴影 */
-  .duo-card {
-    @apply bg-white rounded-[24px] border-2 border-[#E6A600]/20 shadow-[0_6px_0_0_#E6A600];
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  .duo-btn-3d {
-    position: relative;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: all 100ms;
-  }
-  
-  .duo-btn-3d:active {
-    transform: translateY(4px);
-    box-shadow: none !important;
-  }
+/* 进一步弱化阴影，降低对比度 */
+.duo-card {
+  background-color: #FEFBF3;
+  border-radius: 32px;
+  border: 2px solid rgba(230, 166, 0, 0.08);
+  box-shadow: 0 4px 0 0 rgba(230, 166, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-  /* 统一按钮风格，加深边框和投影 */
-  .duo-btn-yellow {
-    @apply bg-duo-yellow text-white px-6 py-4 rounded-[20px] border-b-[6px] border-duo-yellow-dark;
-    position: relative;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: all 100ms;
-    box-shadow: 0 6px 0 0 #B8860B;
-  }
-  
-  .duo-btn-yellow:active {
-    transform: translateY(6px);
-    box-shadow: none;
-  }
+.duo-btn-3d {
+  position: relative;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 100ms;
+}
 
-  .duo-btn-gray {
-    @apply bg-white text-amber-900/60 px-6 py-4 rounded-[20px] border-2 border-b-[6px] border-amber-200;
-    position: relative;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: all 100ms;
-    box-shadow: 0 4px 0 0 rgba(184,134,11,0.2);
-  }
-  
-  .duo-btn-gray:active {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
+.duo-btn-3d:active {
+  transform: translateY(3px);
+  box-shadow: none !important;
+}
 
-  /* 增强垂直文本装饰感 */
-  .zen-vertical-text {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    @apply font-black tracking-[0.2em] text-duo-yellow;
-  }
+/* 调和按钮色调 */
+.duo-btn-yellow {
+  background-color: var(--color-duo-yellow);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 20px;
+  border-bottom: 4px solid var(--color-duo-yellow-dark);
+  position: relative;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 100ms;
+  box-shadow: 0 4px 0 0 rgba(184,134,11,0.2);
+}
+
+.duo-btn-yellow:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.duo-btn-gray {
+  background-color: white;
+  color: rgba(120, 53, 15, 0.6);
+  padding: 1rem 1.5rem;
+  border-radius: 20px;
+  border: 2px solid rgb(254, 243, 199);
+  border-bottom-width: 4px;
+  position: relative;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 100ms;
+  box-shadow: 0 3px 0 0 rgba(184,134,11,0.1);
+}
+
+.duo-btn-gray:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+/* 统一卡片样式 */
+.zen-card {
+  background-color: #FEFBF3;
+  border-radius: 32px;
+  border: 2px solid rgba(230, 166, 0, 0.08);
+  box-shadow: 0 4px 0 0 rgba(230, 166, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* 水波扩散动效 */

@@ -7,83 +7,98 @@ const LIVES = [
 ]
 
 const PRODUCTS = [
-  { id: '1', name: '手工沉香', price: '￥199', category: '文创', image: '🪵' },
-  { id: '2', name: '紫檀佛珠', price: '￥599', category: '智能硬件', image: '📿' },
-  { id: '3', name: '《心经》抄经本', price: '￥39', category: '经书', image: '📖' },
+  { id: '1', name: '手工沉香', price: '￥199', category: '文创', image: '/goods/chenxiang.png' },
+  { id: '2', name: '紫檀佛珠', price: '￥599', category: '智能硬件', image: '/goods/fozhu.png' },
+  { id: '3', name: '《金刚经》抄经本', price: '￥39', category: '经书', image: '/goods/jinggangjin.png' },
 ]
 
 export const LecturePage = () => {
   return (
-    <div className="space-y-8 pb-4">
-      <div className="text-center space-y-1">
-        <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">禅修讲经</h1>
-        <p className="text-[10px] text-zen-text/40 italic">" 闻思修行 · 智慧增广 "</p>
+    <div className="space-y-10 pb-4">
+      <div className="text-center space-y-2">
+        <h1 className="text-4xl font-black text-duo-text tracking-tight drop-shadow-sm">禅修讲经</h1>
+        <p className="text-xs font-black text-amber-900/30 uppercase tracking-[0.2em]">" 闻思修行 · 智慧增广 "</p>
       </div>
 
       {/* Live Section */}
-      <section className="space-y-4">
-        <div className="flex justify-between items-end px-1">
-          <h2 className="text-xl font-serif font-bold text-zen-text flex items-center gap-2">
-            <Video size={20} className="text-zen-gold" strokeWidth={1.5} /> 
+      <section className="space-y-5">
+        <div className="flex justify-between items-end px-2">
+          <h2 className="text-2xl font-black text-duo-text flex items-center gap-3">
+            <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-duo-yellow">
+              <Video size={24} strokeWidth={2.5} /> 
+            </div>
             <span>讲经直播</span>
           </h2>
-          <span className="text-[9px] text-zen-gold/60 font-medium tracking-widest uppercase">Live</span>
+          <span className="text-[10px] font-black text-white bg-red-500 px-3 py-1 rounded-full tracking-widest uppercase shadow-sm animate-pulse">Live</span>
         </div>
-        <div className="flex gap-4 overflow-x-auto pb-3 no-scrollbar">
+        <div className="flex gap-5 overflow-x-auto pb-6 no-scrollbar -mx-4 px-4">
           {LIVES.map(live => (
-            <div key={live.id} className="min-w-[220px] zen-card overflow-hidden group border-none hover:shadow-xl transition-all duration-500">
-              <div className="h-28 bg-zen-gold/5 flex items-center justify-center text-5xl relative">
+            <motion.div 
+              key={live.id} 
+              whileHover={{ scale: 1.02 }}
+              className="min-w-[280px] duo-card overflow-hidden group border-amber-100"
+            >
+              <div className="h-40 bg-amber-50/50 flex items-center justify-center text-6xl relative border-b-2 border-amber-50">
                 {live.thumbnail}
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-zen-gold scale-75 group-hover:scale-100 transition-transform duration-500">
-                    <PlayCircle size={28} fill="currentColor" className="opacity-80" />
+                <div className="absolute inset-0 bg-duo-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-xl text-duo-yellow scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <PlayCircle size={40} fill="currentColor" className="opacity-90" />
                   </div>
                 </div>
-                <div className="absolute top-3 left-3 bg-zen-pink text-[8px] px-2 py-0.5 rounded-full flex items-center gap-1.5 text-white font-bold shadow-lg shadow-zen-pink/20">
-                  <div className="w-1 h-1 bg-white rounded-full animate-ping" /> 直播中
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-[10px] px-3 py-1.5 rounded-xl flex items-center gap-2 text-duo-text font-black shadow-sm">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
+                  <span>2k+ 同修</span>
                 </div>
               </div>
-              <div className="p-4 space-y-2 bg-white">
-                <h3 className="font-serif font-bold text-zen-text text-sm group-hover:text-zen-gold transition-colors line-clamp-1">{live.title}</h3>
+              <div className="p-5 space-y-3 bg-white">
+                <h3 className="text-xl font-black text-duo-text line-clamp-1 group-hover:text-duo-yellow transition-colors">{live.title}</h3>
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-zen-text/60 font-serif">{live.master}</span>
-                  <span className="flex items-center gap-1 text-[9px] text-zen-text/30"><Heart size={10} /> {live.viewers}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-amber-50 rounded-full flex items-center justify-center text-duo-yellow">
+                      <Heart size={12} fill="currentColor" />
+                    </div>
+                    <span className="text-xs font-bold text-amber-900/60">{live.master}</span>
+                  </div>
+                  <span className="text-[10px] font-black text-amber-900/30 uppercase tracking-widest">{live.viewers} 赞叹</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Shop Section */}
-      <section className="space-y-4">
-        <div className="flex justify-between items-end px-1">
-          <h2 className="text-xl font-serif font-bold text-zen-text flex items-center gap-2">
-            <ShoppingBag size={20} className="text-zen-gold" strokeWidth={1.5} /> 
-            <span>佛系商城</span>
+      <section className="space-y-5">
+        <div className="flex justify-between items-end px-2">
+          <h2 className="text-2xl font-black text-duo-text flex items-center gap-3">
+            <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-duo-yellow">
+              <ShoppingBag size={24} strokeWidth={2.5} /> 
+            </div>
+            <span>宝物流通处</span>
           </h2>
-          <button className="text-[9px] text-zen-gold font-bold tracking-widest hover:underline uppercase transition-all">查看全部</button>
+          <button className="text-[10px] font-black text-duo-yellow uppercase tracking-widest hover:underline">查看全部</button>
         </div>
         
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-5">
           {PRODUCTS.map(product => (
             <motion.div 
               key={product.id}
-              whileHover={{ y: -4 }}
-              className="zen-card p-4 group hover:bg-white transition-all duration-300"
+              whileHover={{ y: -6 }}
+              whileTap={{ scale: 0.98, y: 4 }}
+              className="duo-card p-5 group transition-all duration-300"
             >
-              <div className="aspect-square bg-zen-bg rounded-xl mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform duration-500 shadow-inner">
-                {product.image}
+              <div className="aspect-square bg-amber-50/50 rounded-2xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-inner border-2 border-amber-50 overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </div>
-              <div className="space-y-2">
-                <div className="space-y-0.5">
-                  <div className="text-[8px] text-zen-gold font-bold tracking-widest uppercase opacity-60">{product.category}</div>
-                  <h3 className="text-xs font-serif font-bold text-zen-text truncate group-hover:text-zen-gold transition-colors">{product.name}</h3>
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <div className="text-[9px] font-black text-duo-yellow uppercase tracking-widest opacity-60">{product.category}</div>
+                  <h3 className="text-base font-black text-duo-text truncate group-hover:text-duo-yellow transition-colors">{product.name}</h3>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-zen-text font-serif font-bold text-sm">{product.price}</span>
-                  <button className="w-8 h-8 bg-zen-gold/10 rounded-full flex items-center justify-center text-zen-gold hover:bg-zen-gold hover:text-white transition-all">
-                    <ShoppingBag size={14} strokeWidth={2.5} />
+                  <span className="text-duo-text font-black text-lg">{product.price}</span>
+                  <button className="w-10 h-10 bg-amber-50 rounded-2xl flex items-center justify-center text-duo-yellow border-2 border-amber-100 hover:bg-duo-yellow hover:text-white transition-all shadow-sm">
+                    <ShoppingBag size={18} strokeWidth={2.5} />
                   </button>
                 </div>
               </div>
@@ -93,23 +108,26 @@ export const LecturePage = () => {
       </section>
 
       {/* Interaction */}
-      <div className="zen-card p-4 flex items-center justify-between border-none bg-zen-gold/5 overflow-hidden relative">
+      <motion.div 
+        whileHover={{ scale: 1.01 }}
+        className="duo-card p-6 flex items-center justify-between bg-amber-50/30 border-amber-100 shadow-none relative overflow-hidden"
+      >
         {/* Decorative Ring */}
-        <div className="absolute -right-3 -bottom-3 w-16 h-16 border-4 border-zen-gold/5 rounded-full" />
+        <div className="absolute -right-6 -bottom-6 w-32 h-32 border-[12px] border-duo-yellow/5 rounded-full" />
         
-        <div className="flex items-center gap-3 relative z-10">
-          <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-zen-gold">
-            <MessageSquare size={18} strokeWidth={1.5} />
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="w-14 h-14 bg-white rounded-2xl border-2 border-amber-100 shadow-sm flex items-center justify-center text-duo-yellow">
+            <MessageSquare size={28} strokeWidth={2.5} />
           </div>
-          <div className="space-y-0.5">
-            <p className="font-serif font-bold text-zen-gold text-sm">随喜赞叹</p>
-            <p className="text-[9px] text-zen-text/40">234 位同修在线</p>
+          <div className="space-y-1">
+            <p className="font-black text-duo-yellow text-lg leading-none">随喜赞叹</p>
+            <p className="text-[10px] font-black text-amber-900/40 uppercase tracking-widest">234 位同修在线互动</p>
           </div>
         </div>
-        <button className="px-4 py-2 bg-zen-gold text-white rounded-full text-[10px] font-bold shadow-lg shadow-zen-gold/20 hover:scale-105 transition-all active:scale-95 relative z-10">
+        <button className="duo-btn-yellow px-6 py-3 text-xs relative z-10">
           加入互动
         </button>
-      </div>
+      </motion.div>
     </div>
   )
 }

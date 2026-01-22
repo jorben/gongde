@@ -40,13 +40,15 @@ export const Navigation = () => {
   )
 }
 
-export const AIChatButton = ({ onClick }: { onClick: () => void }) => {
+export const AIChatButton = ({ onClick, isWorshipPage }: { onClick: () => void; isWorshipPage?: boolean }) => {
   return (
     <motion.button
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95, y: 4 }}
-      className="fixed right-6 bottom-24 w-16 h-16 bg-duo-yellow text-white rounded-2xl flex items-center justify-center z-50 border-b-4 border-duo-yellow-dark shadow-[0_4px_0_0_#B8860B]"
+      className={`fixed right-6 w-16 h-16 bg-duo-yellow text-white rounded-2xl flex items-center justify-center z-50 border-b-4 border-duo-yellow-dark shadow-[0_4px_0_0_#B8860B] ${
+        isWorshipPage ? 'top-[48%]' : 'bottom-24'
+      }`}
     >
       <MessageCircle size={32} strokeWidth={2.5} />
       <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black border-2 border-white shadow-sm">
@@ -57,7 +59,9 @@ export const AIChatButton = ({ onClick }: { onClick: () => void }) => {
 }
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation()
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const isWorshipPage = location.pathname === '/'
 
   return (
     <div className="min-h-[100dvh] text-duo-text relative overflow-x-hidden font-sans">
@@ -65,7 +69,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
 
-      <AIChatButton onClick={() => setIsChatOpen(true)} />
+      <AIChatButton onClick={() => setIsChatOpen(true)} isWorshipPage={isWorshipPage} />
       <AIChatDialog isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       <Navigation />
     </div>

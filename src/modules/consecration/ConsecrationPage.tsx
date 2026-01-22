@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Cpu, Award, Smartphone, Calendar, Tag, MapPin } from 'lucide-react'
+import { Sparkles, Cpu, Award, Smartphone, Calendar, Tag, MapPin, ChevronLeft } from 'lucide-react'
 
 const DEVICES = [
   { id: '1', name: '智能佛珠手串', type: '手串', icon: <Cpu /> },
@@ -40,49 +40,48 @@ export const ConsecrationPage = () => {
 
   if (isConsecrated) {
     return (
-      <div className="flex flex-col items-center space-y-6 pb-4">
-        <h2 className="text-2xl font-serif font-bold text-zen-text tracking-widest">数字开光证书</h2>
+      <div className="flex flex-col items-center space-y-8 pb-4">
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-black text-duo-text tracking-tight">开光证书</h1>
+          <p className="text-xs font-black text-amber-900/30 uppercase tracking-[0.2em]">" 佛力加持 · 佑护平顺 "</p>
+        </div>
         
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.9, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          className="w-full aspect-[3/4] max-h-[60vh] bg-[#FCFAF5] rounded-2xl border-[8px] border-[#D4C4A8]/20 p-6 text-zen-text shadow-xl relative overflow-hidden flex flex-col items-center justify-between"
+          className="w-full max-w-sm aspect-[3/4] bg-white rounded-[32px] border-4 border-duo-yellow/20 p-8 shadow-[0_12px_40px_rgba(212,160,23,0.15)] relative overflow-hidden flex flex-col items-center justify-between"
         >
-          {/* Decorative Background */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/vintage-paper.png')]" />
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 p-8 opacity-[0.05] text-duo-yellow rotate-12">
+            <Award size={180} strokeWidth={3} />
+          </div>
           
-          {/* Corner Elements */}
-          <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-zen-gold/30 rounded-tl-lg" />
-          <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-zen-gold/30 rounded-tr-lg" />
-          <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-zen-gold/30 rounded-bl-lg" />
-          <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-zen-gold/30 rounded-br-lg" />
-          
-          <div className="relative z-10 text-center space-y-4 w-full">
-            <div className="w-14 h-14 bg-zen-gold/10 rounded-full flex items-center justify-center mx-auto">
-              <Award size={28} className="text-zen-gold" strokeWidth={1.5} />
+          <div className="relative z-10 text-center space-y-6 w-full">
+            <div className="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center mx-auto border-2 border-duo-yellow/10 shadow-sm">
+              <Award size={40} className="text-duo-yellow" strokeWidth={2.5} />
             </div>
             
-            <div className="space-y-1">
-              <h3 className="text-2xl font-serif font-bold text-zen-gold tracking-[0.2em]">开光大吉</h3>
-              <div className="h-0.5 w-16 bg-zen-gold/20 mx-auto" />
+            <div className="space-y-2">
+              <h3 className="text-3xl font-black text-duo-yellow tracking-widest uppercase">开光大吉</h3>
+              <div className="h-1.5 w-16 bg-duo-yellow/10 mx-auto rounded-full" />
             </div>
 
-            <div className="space-y-3 text-left font-serif leading-relaxed px-2">
-              <p className="text-xs text-zen-text/40 tracking-widest">兹证明：</p>
-              <div className="space-y-1">
-                <p className="text-lg font-bold tracking-widest border-b border-zen-text/10 pb-1">智能佛珠手串</p>
-                <p className="text-[11px] text-zen-text/60 leading-relaxed">
-                  已于 <span className="text-zen-gold">2026年01月22日</span> 完成线上开光仪式，承蒙佛力加持，护佑平安喜乐。
+            <div className="space-y-4 text-left px-2">
+              <p className="text-[10px] font-black text-amber-900/30 uppercase tracking-widest">兹证明：</p>
+              <div className="space-y-2">
+                <p className="text-2xl font-black text-duo-text tracking-tight border-b-2 border-amber-50 pb-2">智能佛珠手串</p>
+                <p className="text-xs font-bold text-amber-900/60 leading-relaxed">
+                  已于 <span className="text-duo-yellow font-black">2026年01月22日</span> 完成线上开光仪式，承蒙佛力加持，护佑平安喜乐。
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 w-full flex flex-col items-center gap-2">
-            <div className="zen-vertical-text text-[9px] text-zen-text/20 font-serif tracking-widest h-14">
-              功德 APP 开光专用印鉴
+          <div className="relative z-10 w-full flex flex-col items-center gap-4">
+            <div className="text-[9px] font-black text-amber-900/20 uppercase tracking-[0.3em]">
+              功德 APP 专用认证
             </div>
-            <div className="w-10 h-10 bg-zen-pink/20 rounded-lg flex items-center justify-center border border-zen-pink/30 text-zen-pink text-[9px] font-bold">
+            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center border-2 border-duo-yellow/20 text-duo-yellow text-[10px] font-black shadow-sm rotate-12">
               开光<br/>印玺
             </div>
           </div>
@@ -90,39 +89,46 @@ export const ConsecrationPage = () => {
 
         <button 
           onClick={() => setIsConsecrated(false)}
-          className="text-zen-gold/60 hover:text-zen-gold text-xs tracking-widest border-b border-zen-gold/20 pb-1 transition-all"
+          className="duo-btn-gray flex items-center gap-2"
         >
-          返回开光模块
+          <ChevronLeft size={18} strokeWidth={3} />
+          <span>返回加持</span>
         </button>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6 pb-4">
-      <div className="text-center space-y-1">
-        <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">开光加持</h1>
-        <p className="text-[10px] text-zen-text/40 italic">" 万物有灵 · 虔诚加持 "</p>
+    <div className="space-y-8 pb-4">
+      <div className="text-center space-y-2">
+        <h1 className="text-4xl font-black text-duo-text tracking-tight drop-shadow-sm">开光加持</h1>
+        <p className="text-xs font-black text-amber-900/30 uppercase tracking-[0.2em]">" 万物有灵 · 虔诚加持 "</p>
       </div>
 
-      <div className="space-y-5">
-        <div className="zen-card p-5 space-y-4">
-          <h3 className="text-lg font-serif font-bold text-zen-text flex items-center gap-2">
-            <Cpu size={20} className="text-zen-gold" strokeWidth={1.5} /> 
-            <span>智能硬件绑定</span>
+      <div className="space-y-6">
+        <div className="duo-card p-6 space-y-5">
+          <h3 className="text-xl font-black text-duo-text flex items-center gap-3 uppercase tracking-widest">
+            <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-duo-yellow">
+              <Cpu size={24} strokeWidth={2.5} /> 
+            </div>
+            <span>硬件绑定</span>
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {DEVICES.map(device => (
-              <div key={device.id} className="flex items-center justify-between p-4 bg-zen-bg/50 rounded-xl group hover:bg-white transition-all">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-zen-gold shadow-sm group-hover:scale-105 transition-transform">
+              <div key={device.id} className="flex items-center justify-between p-4 bg-amber-50/30 rounded-2xl border-2 border-amber-100/30 group hover:border-duo-yellow/30 transition-all">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-duo-yellow border-2 border-amber-100 shadow-sm group-hover:scale-105 transition-transform">
                     {device.icon}
                   </div>
-                  <span className="font-serif font-bold text-sm text-zen-text">{device.name}</span>
+                  <span className="font-black text-base text-duo-text">{device.name}</span>
                 </div>
                 <button 
                   onClick={startBinding}
-                  className="px-4 py-1.5 bg-zen-gold/10 text-zen-gold rounded-full text-xs font-bold hover:bg-zen-gold hover:text-white transition-all disabled:opacity-50"
+                  className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${
+                    isBinding 
+                      ? 'bg-amber-100 text-amber-900/30' 
+                      : 'bg-duo-yellow text-white shadow-[0_3px_0_0_#B8860B] active:translate-y-[2px] active:shadow-none'
+                  }`}
                   disabled={isBinding}
                 >
                   {isBinding ? '连接中' : '去绑定'}
@@ -133,48 +139,50 @@ export const ConsecrationPage = () => {
         </div>
 
         {/* Consecration Records */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           {CONSECRATION_RECORDS.map(record => (
             <motion.div 
               key={record.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`zen-card p-4 relative overflow-hidden ${
+              whileHover={{ scale: 1.02 }}
+              className={`duo-card p-6 relative overflow-hidden ${
                 record.isHighlight 
-                  ? 'border-2 border-zen-gold bg-gradient-to-r from-zen-gold/10 to-zen-gold/5 shadow-lg shadow-zen-gold/20' 
+                  ? 'border-duo-yellow shadow-[0_6px_0_0_#FFB800]' 
                   : ''
               }`}
             >
               {record.isHighlight && (
-                <div className="absolute top-0 right-0 bg-zen-gold text-white text-[9px] px-3 py-1 rounded-bl-lg font-bold">
-                  精选
+                <div className="absolute top-0 right-0 bg-duo-yellow text-white text-[10px] px-4 py-1.5 rounded-bl-2xl font-black uppercase tracking-wider">
+                  精选仪式
                 </div>
               )}
               <div className="flex items-start justify-between">
-                <div className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    record.isHighlight ? 'bg-zen-gold text-white' : 'bg-zen-gold/10 text-zen-gold'
+                <div className="flex items-start gap-4">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 border-2 ${
+                    record.isHighlight 
+                      ? 'bg-duo-yellow text-white border-duo-yellow-dark shadow-sm' 
+                      : 'bg-amber-50 text-duo-yellow border-amber-100'
                   }`}>
-                    <Sparkles size={18} strokeWidth={1.5} />
+                    <Sparkles size={28} strokeWidth={2.5} />
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className={`font-serif font-bold ${record.isHighlight ? 'text-zen-gold' : 'text-zen-text'}`}>
-                        {record.temple}{record.master}开光
+                      <span className={`text-lg font-black ${record.isHighlight ? 'text-duo-text' : 'text-duo-text'}`}>
+                        {record.temple}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] text-zen-text/50">
-                      <Calendar size={12} />
+                    <div className="text-sm font-bold text-amber-900/60">{record.master}开光</div>
+                    <div className="flex items-center gap-2 text-[11px] font-black text-amber-900/30 uppercase">
+                      <Calendar size={12} strokeWidth={3} />
                       <span>{record.date}</span>
                     </div>
                   </div>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 ${
+                <span className={`px-3 py-1.5 rounded-xl text-[10px] font-black flex items-center gap-1.5 border-2 ${
                   record.isHighlight 
-                    ? 'bg-zen-pink/20 text-zen-pink' 
-                    : 'bg-zen-text/10 text-zen-text/60'
+                    ? 'bg-white text-duo-yellow border-duo-yellow/20 shadow-sm' 
+                    : 'bg-amber-50/50 text-amber-900/40 border-amber-100/50'
                 }`}>
-                  <Tag size={10} />
+                  <Tag size={12} strokeWidth={3} />
                   {record.tag}
                 </span>
               </div>
@@ -183,42 +191,39 @@ export const ConsecrationPage = () => {
         </div>
 
         {/* 开光地图模块 */}
-        <div className="zen-card p-0 overflow-hidden relative">
+        <div className="duo-card p-0 overflow-hidden relative border-amber-100">
           {/* 地图背景 */}
-          <div className="absolute inset-0 bg-gradient-to-br from-zen-gold/5 via-zen-bg to-zen-gold/10">
+          <div className="absolute inset-0 bg-amber-50/50">
             {/* 模拟地图网格线 */}
-            <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 opacity-10">
               <div className="h-full w-full" style={{
                 backgroundImage: `
-                  linear-gradient(rgba(212, 175, 55, 0.3) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(212, 175, 55, 0.3) 1px, transparent 1px)
+                  linear-gradient(rgba(212, 160, 23, 0.5) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(212, 160, 23, 0.5) 1px, transparent 1px)
                 `,
-                backgroundSize: '30px 30px'
+                backgroundSize: '40px 40px'
               }} />
             </div>
-            {/* 模拟地图标记点 - 调整位置避免遮挡 */}
-            <div className="absolute top-4 left-6 w-2 h-2 bg-zen-gold rounded-full animate-pulse" />
-            <div className="absolute top-8 left-1/2 w-2 h-2 bg-zen-pink rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="absolute top-16 left-10 w-2 h-2 bg-zen-gold rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-            <div className="absolute top-12 left-1/4 w-2 h-2 bg-zen-pink rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
-            <div className="absolute top-6 left-1/3 w-3 h-3 bg-zen-gold rounded-full animate-pulse shadow-lg shadow-zen-gold/50" />
+            {/* 模拟地图标记点 */}
+            <div className="absolute top-1/2 left-1/3 w-4 h-4 bg-duo-yellow rounded-full animate-ping opacity-30" />
+            <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-duo-yellow rounded-full shadow-[0_0_10px_rgba(255,184,0,0.5)]" />
           </div>
           
           {/* 内容 */}
-          <div className="relative z-10 p-5 space-y-3">
-            <h3 className="text-lg font-serif font-bold text-zen-text flex items-center gap-2">
-              <div className="w-8 h-8 bg-zen-gold/20 rounded-full flex items-center justify-center">
-                <MapPin size={18} className="text-zen-gold" strokeWidth={2} />
+          <div className="relative z-10 p-6 space-y-4">
+            <h3 className="text-xl font-black text-duo-text flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-2xl border-2 border-amber-100 flex items-center justify-center shadow-sm">
+                <MapPin size={28} className="text-duo-yellow" strokeWidth={2.5} />
               </div>
-              <span>开光地图</span>
+              <span>线下开光点</span>
             </h3>
-            <p className="text-sm text-zen-text/60 leading-relaxed pl-10">
-              绑定智能硬件，寻找附近线下可开光的地点
+            <p className="text-sm font-bold text-amber-900/60 leading-relaxed pl-1">
+              绑定智能硬件，寻找您附近支持线下加持的寺庙与道场
             </p>
-            <div className="flex justify-end">
-              <button className="px-4 py-2 bg-zen-gold/10 text-zen-gold rounded-full text-xs font-bold hover:bg-zen-gold hover:text-white transition-all flex items-center gap-1.5">
-                <MapPin size={12} />
-                查看地图
+            <div className="flex justify-end pt-2">
+              <button className="duo-btn-yellow px-6 py-3 text-xs flex items-center gap-2">
+                <MapPin size={16} strokeWidth={3} />
+                <span>查看附近地图</span>
               </button>
             </div>
           </div>

@@ -155,13 +155,17 @@ export const WorshipPage = () => {
         )}
       </button>
 
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-black text-duo-text tracking-tight drop-shadow-sm">诚心祈愿</h1>
-        <div className="inline-flex items-center gap-3 px-8 py-3 bg-white rounded-2xl border-2 border-duo-yellow/20 shadow-[0_4px_0_0_#FFB800]">
-          <span className="text-xs font-black text-amber-900/40 uppercase tracking-widest">当前功德</span>
-          <span className="text-duo-yellow font-black text-3xl">{totalMerit}</span>
+      {/* Merit Badge - Fixed Top Right */}
+      <div className="fixed top-4 right-4 z-40 flex flex-col items-center">
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-duo-yellow to-amber-500 flex items-center justify-center shadow-lg border-2 border-white">
+          <span className="text-white font-black text-lg">{totalMerit}</span>
         </div>
+        <span className="text-[10px] font-black text-amber-900/50 mt-1">功德数</span>
+      </div>
+
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-black text-duo-text tracking-tight drop-shadow-sm">诚心祈愿</h1>
       </div>
 
       {/* Buddha Image Display with Swipe */}
@@ -296,19 +300,19 @@ export const WorshipPage = () => {
         {/* 快捷入口 */}
         <div className="flex justify-around pt-2">
           {[
-            { icon: '🪔', label: '请香' },
-            { icon: '🙏', label: '功德' },
-            { icon: '💝', label: '募捐' }
+            { icon: '/action/qingxiang.png', label: '请香' },
+            { icon: '/action/gongde.png', label: '功德' },
+            { icon: '/action/mujuan.png', label: '募捐' }
           ].map((item) => (
             <button
               key={item.label}
               disabled
-              className="flex flex-col items-center gap-2 opacity-40 cursor-not-allowed group"
+              className="flex flex-col items-center gap-2 opacity-60 cursor-not-allowed group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-gray-50 border-2 border-gray-100 flex items-center justify-center text-2xl transition-transform group-hover:scale-105">
-                {item.icon}
+              <div className="w-14 h-14 rounded-full bg-amber-50/50 border-2 border-amber-100 overflow-hidden transition-transform group-hover:scale-105">
+                <img src={item.icon} alt={item.label} className="w-full h-full object-cover" />
               </div>
-              <span className="text-[11px] font-black text-gray-400 uppercase tracking-tighter">{item.label}</span>
+              <span className="text-[11px] font-black text-amber-900/70 uppercase tracking-tighter">{item.label}</span>
             </button>
           ))}
         </div>
