@@ -148,12 +148,17 @@ export const WorshipPage = () => {
       </div>
 
       {/* Buddha Image Display */}
-      <div className="relative w-52 h-52 flex items-center justify-center flex-shrink-0">
-        {/* Decorative Rings */}
-        <div className="absolute inset-0 border border-zen-gold/10 rounded-full animate-[spin_20s_linear_infinite]" />
-        <div className="absolute inset-3 border border-zen-gold/5 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+      <div className="relative w-72 h-72 flex items-center justify-center flex-shrink-0">
+        {/* Ripple Wave Effect - 向外扩散的水波 */}
+        <div className="ripple-container">
+          <div className="ripple-wave" />
+          <div className="ripple-wave" />
+          <div className="ripple-wave" />
+          <div className="ripple-wave" />
+          <div className="ripple-wave" />
+        </div>
         
-        <div className="relative w-44 h-44 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-inner border border-white/50 overflow-hidden">
+        <div className="relative w-44 h-44 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-inner border border-white/50 overflow-hidden z-10">
           <motion.div
             key={selectedBuddha.name}
             initial={{ opacity: 0, scale: 0.9 }}

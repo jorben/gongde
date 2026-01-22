@@ -50,3 +50,53 @@ h1, h2, h3, h4, .font-serif {
     text-orientation: mixed;
   }
 }
+
+/* 水波扩散动效 */
+@keyframes ripple-wave {
+  0% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.ripple-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ripple-wave {
+  position: absolute;
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  border: 2px solid rgba(197, 160, 89, 0.4);
+  animation: ripple-wave 4.5s ease-out infinite;
+}
+
+.ripple-wave:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.ripple-wave:nth-child(2) {
+  animation-delay: 0.9s;
+}
+
+.ripple-wave:nth-child(3) {
+  animation-delay: 1.8s;
+}
+
+.ripple-wave:nth-child(4) {
+  animation-delay: 2.7s;
+}
+
+.ripple-wave:nth-child(5) {
+  animation-delay: 3.6s;
+}

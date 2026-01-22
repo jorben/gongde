@@ -25,6 +25,23 @@ export default {
       backgroundImage: {
         'traditional-pattern': "url('/assets/pattern.png')",
       },
+      keyframes: {
+        ripple: {
+          '0%': {
+            transform: 'scale(1)',
+            opacity: '0.6',
+            borderWidth: '2px',
+          },
+          '100%': {
+            transform: 'scale(1.8)',
+            opacity: '0',
+            borderWidth: '1px',
+          },
+        },
+      },
+      animation: {
+        ripple: 'ripple 2.5s ease-out infinite',
+      },
     },
   },
   plugins: [],
