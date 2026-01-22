@@ -151,7 +151,7 @@ export const WorshipPage = () => {
             <ChevronRight size={12} className="text-zen-text/40" />
           </>
         ) : (
-          <span>点击查找附近的寺庙</span>
+          <span>附近的寺庙</span>
         )}
       </button>
 
