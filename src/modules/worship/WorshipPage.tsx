@@ -104,23 +104,21 @@ export const WorshipPage = () => {
 
   return (
     <div className="flex flex-col items-center space-y-6 pb-4">
-      {/* LBS Location - Top Left */}
-      <div className="w-full flex justify-start">
-        <button
-          onClick={() => navigate('/temples')}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 hover:bg-white/80 rounded-full text-xs text-zen-text/70 transition-all border border-zen-gold/20 shadow-sm"
-        >
-          <MapPin size={12} className="text-zen-gold" />
-          {selectedTemple ? (
-            <>
-              <span className="max-w-[120px] truncate">{selectedTemple}</span>
-              <ChevronRight size={12} className="text-zen-text/40" />
-            </>
-          ) : (
-            <span>点击查找附近的寺庙</span>
-          )}
-        </button>
-      </div>
+      {/* LBS Location - Fixed Top Left */}
+      <button
+        onClick={() => navigate('/temples')}
+        className="fixed top-4 left-4 z-40 flex items-center gap-1.5 px-3 py-1.5 bg-white/60 hover:bg-white/80 rounded-full text-xs text-zen-text/70 transition-all border border-zen-gold/20 shadow-sm backdrop-blur-sm"
+      >
+        <MapPin size={12} className="text-zen-gold" />
+        {selectedTemple ? (
+          <>
+            <span className="max-w-[120px] truncate">{selectedTemple}</span>
+            <ChevronRight size={12} className="text-zen-text/40" />
+          </>
+        ) : (
+          <span>点击查找附近的寺庙</span>
+        )}
+      </button>
 
       {/* Header */}
       <div className="text-center space-y-2">
