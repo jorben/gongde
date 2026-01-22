@@ -4,6 +4,7 @@ import { WorshipPage } from './modules/worship/WorshipPage'
 import { HomeworkPage } from './modules/homework/HomeworkPage'
 import { ConsecrationPage } from './modules/consecration/ConsecrationPage'
 import { LecturePage } from './modules/lecture/LecturePage'
+import { TemplesPage } from './modules/temples/TemplesPage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/homework" element={<HomeworkPage />} />
           <Route path="/consecration" element={<ConsecrationPage />} />
           <Route path="/lecture" element={<LecturePage />} />
+          <Route path="/temples" element={<TemplesPage />} />
         </Routes>
       </Layout>
     </Router>

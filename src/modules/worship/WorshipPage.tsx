@@ -1,28 +1,79 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '../../store/useUserStore'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, MapPin, ChevronRight } from 'lucide-react'
 
 const BUDDHAS = [
-  { name: '观音菩萨', domain: '慈悲、平安', color: 'text-blue-200', image: '/bodhisattva-guanyin.png' },
-  { name: '文殊菩萨', domain: '智慧、学业', color: 'text-orange-200', image: '/bodhisattva-wenshu.png' },
-  { name: '地藏菩萨', domain: '超度、孝道', color: 'text-yellow-200', image: '/bodhisattva-dizang.png' },
-  { name: '财神', domain: '财运、事业', color: 'text-red-200', image: '/bodhisattva-caishen.png' },
+  { name: '观音菩萨', domain: '慈悲、平安', tags: ['平安', '健康'], color: 'text-blue-200', image: '/bodhisattva-guanyin.png' },
+  { name: '文殊菩萨', domain: '智慧、学业', tags: ['学业', '智慧'], color: 'text-orange-200', image: '/bodhisattva-wenshu.png' },
+  { name: '地藏菩萨', domain: '超度、孝道', tags: ['长寿', '孝道'], color: 'text-yellow-200', image: '/bodhisattva-dizang.png' },
+  { name: '财神', domain: '财运、事业', tags: ['财富', '事业'], color: 'text-red-200', image: '/bodhisattva-caishen.png' },
 ]
 
 const MAX_DAILY_WISHES = 3
 
+// 预设心愿列表，按菩萨分类
+const PRESET_WISHES: Record<string, string[]> = {
+  '观音菩萨': [
+    '愿家人平安健康',
+    '愿一切众生离苦得乐',
+    '愿世界和平安宁',
+    '愿父母身体康健',
+    '愿疾病早日痊愈',
+    '愿出入平安顺遂',
+  ],
+  '文殊菩萨': [
+    '愿考试金榜题名',
+    '愿学业有成',
+    '愿开启智慧明灯',
+    '愿孩子学业进步',
+    '愿工作面试顺利',
+    '愿思维清晰敏捷',
+  ],
+  '地藏菩萨': [
+    '愿先人往生净土',
+    '愿历代宗亲得度',
+    '愿父母福寿绵长',
+    '愿冤亲债主解怨',
+    '愿六道众生离苦',
+    '愿孝心感动天地',
+  ],
+  '财神': [
+    '愿财运亨通发达',
+    '愿事业蒸蒸日上',
+    '愿生意兴隆红火',
+    '愿工作升职加薪',
+    '愿投资收益丰厚',
+    '愿贵人相助成功',
+  ],
+}
+
+// 随机获取指定数量的心愿
+const getRandomWishes = (buddhaName: string, count: number = 4): string[] => {
+  const wishes = PRESET_WISHES[buddhaName] || PRESET_WISHES['观音菩萨']
+  const shuffled = [...wishes].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, count)
+}
+
 export const WorshipPage = () => {
-  const { totalMerit, addWorshipRecord, dailyData, resetDailyDataIfNeeded } = useUserStore()
+  const navigate = useNavigate()
+  const { totalMerit, addWorshipRecord, dailyData, resetDailyDataIfNeeded, selectedTemple } = useUserStore()
   const [selectedBuddha, setSelectedBuddha] = useState(BUDDHAS[0])
   const [wish, setWish] = useState('')
   const [merits, setMerits] = useState<{ id: number; x: number; y: number }[]>([])
+  const [presetWishes, setPresetWishes] = useState<string[]>(() => getRandomWishes(BUDDHAS[0].name))
 
   const wishExhausted = dailyData.wishCount >= MAX_DAILY_WISHES
 
   useEffect(() => {
     resetDailyDataIfNeeded()
   }, [])
+
+  // 当选择不同菩萨时，更新预设心愿
+  useEffect(() => {
+    setPresetWishes(getRandomWishes(selectedBuddha.name))
+  }, [selectedBuddha])
 
   const handleWorship = () => {
     if (wishExhausted) {
@@ -52,6 +103,24 @@ export const WorshipPage = () => {
 
   return (
     <div className="flex flex-col items-center space-y-6 pb-4">
+      {/* LBS Location - Top Left */}
+      <div className="w-full flex justify-start">
+        <button
+          onClick={() => navigate('/temples')}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 hover:bg-white/80 rounded-full text-xs text-zen-text/70 transition-all border border-zen-gold/20 shadow-sm"
+        >
+          <MapPin size={12} className="text-zen-gold" />
+          {selectedTemple ? (
+            <>
+              <span className="max-w-[120px] truncate">{selectedTemple}</span>
+              <ChevronRight size={12} className="text-zen-text/40" />
+            </>
+          ) : (
+            <span>点击查找附近的寺庙</span>
+          )}
+        </button>
+      </div>
+
       {/* Header */}
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">许愿</h1>
@@ -116,12 +185,24 @@ export const WorshipPage = () => {
         </div>
       </div>
 
-      {/* Buddha Name */}
-      <div className="text-zen-text font-serif text-lg tracking-widest -mt-2">{selectedBuddha.name}</div>
+      {/* Buddha Name and Tags */}
+      <div className="flex items-center gap-2 -mt-2">
+        <div className="text-zen-text font-serif text-lg tracking-widest">{selectedBuddha.name}</div>
+        <div className="flex gap-1">
+          {selectedBuddha.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-0.5 text-[10px] bg-zen-gold/15 text-zen-gold rounded-full border border-zen-gold/20"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Wish Input Section */}
       <div className="w-full zen-card p-5 space-y-4">
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label className="text-xs font-medium text-zen-text/40 ml-1">所求心愿</label>
           <textarea
             value={wish}
@@ -130,6 +211,25 @@ export const WorshipPage = () => {
             className="w-full h-20 bg-zen-bg/50 border-none rounded-xl p-3 text-sm text-zen-text placeholder:text-zen-text/20 focus:ring-1 focus:ring-zen-gold/30 resize-none transition-all"
             disabled={wishExhausted}
           />
+          {/* 预设心愿标签 */}
+          <div className="flex flex-wrap gap-2">
+            {presetWishes.map((presetWish, index) => (
+              <button
+                key={index}
+                onClick={() => !wishExhausted && setWish(presetWish)}
+                disabled={wishExhausted}
+                className={`px-3 py-1.5 text-xs rounded-full transition-all ${
+                  wishExhausted
+                    ? 'bg-zen-text/5 text-zen-text/20 cursor-not-allowed'
+                    : wish === presetWish
+                      ? 'bg-zen-gold/20 text-zen-gold border border-zen-gold/30'
+                      : 'bg-zen-bg/60 text-zen-text/60 hover:bg-zen-gold/10 hover:text-zen-gold border border-transparent'
+                }`}
+              >
+                {presetWish}
+              </button>
+            ))}
+          </div>
         </div>
         
         <button

@@ -13,6 +13,7 @@ interface WorshipRecord {
 interface UserState {
   totalMerit: number
   consecutiveDays: number
+  selectedTemple: string | null
   dailyData: {
     incenseUsed: boolean
     wishCount: number
@@ -26,6 +27,7 @@ interface UserState {
   addWorshipRecord: (record: Omit<WorshipRecord, 'id' | 'time' | 'merit'>) => void
   resetDailyDataIfNeeded: () => void
   useIncense: () => void
+  setSelectedTemple: (temple: string | null) => void
 }
 
 export const useUserStore = create<UserState>()(
@@ -33,6 +35,7 @@ export const useUserStore = create<UserState>()(
     (set, get) => ({
       totalMerit: 0,
       consecutiveDays: 0,
+      selectedTemple: null,
       dailyData: {
         incenseUsed: false,
         wishCount: 0,
@@ -79,6 +82,7 @@ export const useUserStore = create<UserState>()(
       useIncense: () => set((state) => ({
         dailyData: { ...state.dailyData, incenseUsed: true }
       })),
+      setSelectedTemple: (temple) => set(() => ({ selectedTemple: temple })),
     }),
     {
       name: 'gongde-user-storage',
