@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '../../store/useUserStore'
-import { Sparkles, MapPin, ChevronRight } from 'lucide-react'
+import { Sparkles, MapPin, ChevronRight, ChevronLeft } from 'lucide-react'
 
 const BUDDHAS = [
   { name: '观音菩萨', domain: '慈悲、平安', tags: ['平安', '健康'], color: 'text-blue-200', image: '/bodhisattva-guanyin.png' },
@@ -59,13 +59,48 @@ const getRandomWishes = (buddhaName: string, count: number = 4): string[] => {
 export const WorshipPage = () => {
   const navigate = useNavigate()
   const { totalMerit, addWorshipRecord, dailyData, resetDailyDataIfNeeded, selectedTemple } = useUserStore()
-  const [selectedBuddha, setSelectedBuddha] = useState(BUDDHAS[0])
+  const [buddhaIndex, setBuddhaIndex] = useState(0)
   const [wish, setWish] = useState('')
   const [merits, setMerits] = useState<{ id: number; x: number; y: number }[]>([])
   const [presetWishes, setPresetWishes] = useState<string[]>(() => getRandomWishes(BUDDHAS[0].name))
   const [isInputFocused, setIsInputFocused] = useState(false)
+  const [slideDirection, setSlideDirection] = useState(0)
+  const touchStartX = useRef<number | null>(null)
 
+  const selectedBuddha = BUDDHAS[buddhaIndex]
   const wishExhausted = dailyData.wishCount >= MAX_DAILY_WISHES
+
+  // 切换到上一个菩萨
+  const handlePrevBuddha = () => {
+    setSlideDirection(-1)
+    setBuddhaIndex((prev) => (prev - 1 + BUDDHAS.length) % BUDDHAS.length)
+  }
+
+  // 切换到下一个菩萨
+  const handleNextBuddha = () => {
+    setSlideDirection(1)
+    setBuddhaIndex((prev) => (prev + 1) % BUDDHAS.length)
+  }
+
+  // 触摸滑动处理
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        handleNextBuddha()
+      } else {
+        handlePrevBuddha()
+      }
+    }
+    touchStartX.current = null
+  }
 
   useEffect(() => {
     resetDailyDataIfNeeded()
@@ -129,64 +164,73 @@ export const WorshipPage = () => {
         </div>
       </div>
 
-      {/* Buddha Selection */}
-      <div className="w-full flex justify-between gap-2 overflow-x-auto pb-2 no-scrollbar">
-        {BUDDHAS.map((b) => (
-          <button
-            key={b.name}
-            onClick={() => setSelectedBuddha(b)}
-            className={`flex-1 min-w-[76px] p-2.5 rounded-xl transition-all duration-300 border ${
-              selectedBuddha.name === b.name
-                ? 'bg-white shadow-lg shadow-zen-gold/10 border-zen-gold text-zen-gold scale-105'
-                : 'bg-white/40 border-transparent text-zen-text/40 hover:bg-white/60'
-            }`}
-          >
-            <div className="text-[11px] font-bold mb-0.5">{b.name}</div>
-            <div className="text-[9px] opacity-70 leading-tight">{b.domain}</div>
-          </button>
-        ))}
-      </div>
+      {/* Buddha Image Display with Swipe */}
+      <div 
+        className="relative w-full flex items-center justify-center flex-shrink-0"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Left Arrow */}
+        <button 
+          onClick={handlePrevBuddha}
+          className="absolute left-2 z-20 p-2 text-zen-gold/60 hover:text-zen-gold transition-colors"
+        >
+          <ChevronLeft size={36} strokeWidth={2.5} />
+        </button>
 
-      {/* Buddha Image Display */}
-      <div className="relative w-72 h-72 flex items-center justify-center flex-shrink-0">
-        {/* Ripple Wave Effect - 向外扩散的水波 */}
-        <div className="ripple-container">
-          <div className="ripple-wave" />
-          <div className="ripple-wave" />
-          <div className="ripple-wave" />
-          <div className="ripple-wave" />
-          <div className="ripple-wave" />
-        </div>
-        
-        <div className="relative w-44 h-44 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-inner border border-white/50 overflow-hidden z-10">
-          <motion.div
-            key={selectedBuddha.name}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <img 
-              src={selectedBuddha.image} 
-              alt={selectedBuddha.name}
-              className="w-80 h-80 object-contain drop-shadow-md"
-            />
-          </motion.div>
-
-          {/* Floating Merits */}
-          <AnimatePresence>
-            {merits.map((m) => (
+        {/* Buddha Image Container */}
+        <div className="relative w-72 h-72 flex items-center justify-center">
+          {/* Ripple Wave Effect - 向外扩散的水波 */}
+          <div className="ripple-container">
+            <div className="ripple-wave" />
+            <div className="ripple-wave" />
+            <div className="ripple-wave" />
+            <div className="ripple-wave" />
+            <div className="ripple-wave" />
+          </div>
+          
+          <div className="relative w-44 h-44 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-inner border border-white/50 overflow-hidden z-10">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
-                key={m.id}
-                initial={{ opacity: 0, y: 20, x: m.x }}
-                animate={{ opacity: 1, y: m.y }}
-                exit={{ opacity: 0 }}
-                className="absolute text-zen-gold font-bold text-xl pointer-events-none whitespace-nowrap z-10"
+                key={selectedBuddha.name}
+                initial={{ opacity: 0, x: slideDirection * 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -slideDirection * 100 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex items-center justify-center"
               >
-                功德 +1
+                <img 
+                  src={selectedBuddha.image} 
+                  alt={selectedBuddha.name}
+                  className="w-80 h-80 object-contain drop-shadow-md"
+                />
               </motion.div>
-            ))}
-          </AnimatePresence>
+            </AnimatePresence>
+
+            {/* Floating Merits */}
+            <AnimatePresence>
+              {merits.map((m) => (
+                <motion.div
+                  key={m.id}
+                  initial={{ opacity: 0, y: 20, x: m.x }}
+                  animate={{ opacity: 1, y: m.y }}
+                  exit={{ opacity: 0 }}
+                  className="absolute text-zen-gold font-bold text-xl pointer-events-none whitespace-nowrap z-10"
+                >
+                  功德 +1
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
         </div>
+
+        {/* Right Arrow */}
+        <button 
+          onClick={handleNextBuddha}
+          className="absolute right-2 z-20 p-2 text-zen-gold/60 hover:text-zen-gold transition-colors"
+        >
+          <ChevronRight size={36} strokeWidth={2.5} />
+        </button>
       </div>
 
       {/* Buddha Name and Tags */}
