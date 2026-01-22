@@ -14,113 +14,115 @@ export const HomeworkPage = () => {
 
   if (selectedSutra) {
     return (
-      <div className="flex flex-col h-[calc(100dvh-7rem)] bg-zen-bg -mx-4 -mt-6 px-4 pt-4">
+      <div className="flex flex-col h-[calc(100dvh-8rem)] -mx-4 -mt-6 px-4 pt-4">
         <button 
           onClick={() => { setSelectedSutra(null); setIsPlaying(false); }}
-          className="text-zen-gold mb-4 self-start flex items-center gap-2 font-medium text-sm"
+          className="text-duo-yellow mb-6 self-start flex items-center gap-2 font-black text-xs uppercase tracking-widest"
         >
-          <span className="text-lg">←</span>
+          <span className="text-xl">←</span>
           <span>返回修行</span>
         </button>
         
-        <div className="text-center mb-4 space-y-1">
-          <h2 className="text-3xl font-serif text-zen-text tracking-[0.2em]">{selectedSutra.name}</h2>
-          <div className="flex justify-center gap-4 text-[10px] text-zen-text/40 tracking-widest">
-            <span className="flex items-center gap-1"><BookOpen size={10} /> {selectedSutra.duration}</span>
-            <span className="flex items-center gap-1"><Sparkles size={10} /> {selectedSutra.difficulty}</span>
+        <div className="text-center mb-6 space-y-2">
+          <h2 className="text-3xl font-black text-duo-text">{selectedSutra.name}</h2>
+          <div className="flex justify-center gap-4">
+            <span className="flex items-center gap-1.5 px-3 py-1 bg-amber-50/50 text-[11px] font-black text-amber-900/40 rounded-lg border-2 border-amber-100/50"><BookOpen size={12} strokeWidth={3} /> {selectedSutra.duration}</span>
+            <span className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-[11px] font-black text-duo-yellow rounded-lg border-2 border-duo-yellow/10"><Sparkles size={12} strokeWidth={3} /> {selectedSutra.difficulty}</span>
           </div>
         </div>
 
-        <div className="flex-1 zen-card p-5 overflow-y-auto relative bg-white/40 border-none shadow-inner min-h-0">
+        <div className="flex-1 duo-card p-6 overflow-y-auto relative bg-white/50 border-amber-100/30 shadow-inner min-h-0">
           <motion.div
             initial={{ y: 0 }}
             animate={isPlaying ? { y: -2000 } : {}}
             transition={{ duration: 60, ease: "linear" }}
-            className="text-lg leading-[2.2] text-center font-serif text-zen-text/80 tracking-widest"
+            className="text-lg leading-[2.4] text-center font-bold text-duo-text/80 tracking-wide"
           >
             {selectedSutra.content.split('。').map((sentence, i) => (
-              <p key={i} className="mb-3">{sentence}{sentence && '。'}</p>
+              <p key={i} className="mb-4">{sentence}{sentence && '。'}</p>
             ))}
             {selectedSutra.content.repeat(5).split('。').map((sentence, i) => (
-              <p key={i} className="mb-3">{sentence}{sentence && '。'}</p>
+              <p key={i} className="mb-4">{sentence}{sentence && '。'}</p>
             ))}
           </motion.div>
         </div>
 
-        <div className="py-4 flex justify-center items-center gap-10 flex-shrink-0">
-          <button className="text-zen-text/20 hover:text-zen-gold transition-colors"><Music size={22} /></button>
+        <div className="py-8 flex justify-center items-center gap-12 flex-shrink-0">
+          <button className="text-amber-300 hover:text-duo-yellow transition-colors active:scale-90"><Music size={32} strokeWidth={3} /></button>
           <button 
             onClick={() => setIsPlaying(!isPlaying)}
-            className="w-16 h-16 bg-zen-gold rounded-full flex items-center justify-center text-white shadow-xl shadow-zen-gold/30 transition-transform active:scale-90"
+            className={`w-24 h-24 rounded-[32px] flex items-center justify-center text-white transition-all ${
+              isPlaying ? 'bg-duo-yellow border-b-[6px] border-duo-yellow-dark shadow-[0_6px_0_0_#B8860B]' : 'duo-btn-yellow'
+            }`}
           >
-            {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}
+            {isPlaying ? <Pause size={44} fill="currentColor" strokeWidth={0} /> : <Play size={44} fill="currentColor" strokeWidth={0} className="ml-1" />}
           </button>
-          <button className="text-zen-text/20 hover:text-zen-green transition-colors"><CheckCircle2 size={22} /></button>
+          <button className="text-amber-300 hover:text-amber-500 transition-colors active:scale-90"><CheckCircle2 size={32} strokeWidth={3} /></button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6 pb-4">
-      <div className="text-center space-y-1">
-        <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">功课修行</h1>
-        <p className="text-[10px] text-zen-text/40 italic">" 每日一课，积沙成塔 "</p>
+    <div className="space-y-8 pb-4">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-black text-duo-text tracking-tight">功课修行</h1>
+        <p className="text-xs font-black text-amber-900/20 uppercase tracking-[0.2em]">" 每日一课，积沙成塔 "</p>
       </div>
       
-      <div className="space-y-4">
-        <div className="flex gap-6 border-b border-zen-text/5 pb-1">
-          <button className="text-zen-gold border-b-2 border-zen-gold pb-2 font-bold tracking-widest text-sm transition-all">经书列表</button>
-          <button className="text-zen-text/30 pb-2 text-sm tracking-widest hover:text-zen-text transition-all">佛教音乐</button>
+      <div className="space-y-5">
+        <div className="flex gap-8 border-b-2 border-amber-100/50">
+          <button className="text-duo-yellow border-b-4 border-duo-yellow -mb-[2px] pb-3 font-black uppercase tracking-widest text-xs transition-all">经书列表</button>
+          <button className="text-amber-900/20 pb-3 text-xs font-black uppercase tracking-widest hover:text-duo-text transition-all">佛教音乐</button>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {SUTRAS.map((sutra) => (
             <motion.div
               key={sutra.id}
-              whileHover={{ scale: 1.01, x: 2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98, y: 2 }}
               onClick={() => setSelectedSutra(sutra)}
-              className="zen-card p-4 flex items-center justify-between cursor-pointer group hover:bg-white transition-all"
+              className="duo-card p-5 flex items-center justify-between cursor-pointer group hover:border-duo-yellow/20 transition-all"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-zen-gold/10 rounded-xl flex items-center justify-center text-zen-gold group-hover:bg-zen-gold group-hover:text-white transition-all">
-                  <BookOpen size={24} strokeWidth={1.5} />
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-duo-yellow border-2 border-duo-yellow/10 group-hover:bg-duo-yellow group-hover:text-white group-hover:border-duo-yellow transition-all">
+                  <BookOpen size={28} strokeWidth={2.5} />
                 </div>
-                <div className="space-y-0.5">
-                  <h3 className="font-serif font-bold text-lg text-zen-text">{sutra.name}</h3>
-                  <div className="flex items-center gap-2 text-[10px] text-zen-text/40">
+                <div className="space-y-1">
+                  <h3 className="font-black text-xl text-duo-text group-hover:text-duo-yellow transition-colors">{sutra.name}</h3>
+                  <div className="flex items-center gap-3 text-[11px] font-black text-amber-900/40 uppercase tracking-tight">
                     <span>{sutra.duration}</span>
-                    <span className="w-1 h-1 bg-zen-text/10 rounded-full" />
+                    <span className="w-1.5 h-1.5 bg-amber-100/50 rounded-full" />
                     <span>{sutra.difficulty}</span>
                   </div>
                 </div>
               </div>
-              <div className="w-9 h-9 rounded-full bg-zen-bg flex items-center justify-center text-zen-gold/40 group-hover:text-zen-gold transition-all">
-                <Play size={18} fill="currentColor" />
+              <div className="w-10 h-10 rounded-xl bg-amber-50/50 flex items-center justify-center text-amber-200 group-hover:text-duo-yellow group-hover:bg-amber-50 transition-all">
+                <Play size={20} fill="currentColor" strokeWidth={0} />
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      <div className="zen-card p-6 bg-zen-gold/5 border-none shadow-none relative overflow-hidden">
+      <div className="duo-card p-6 bg-amber-50/30 border-amber-100/10 shadow-none relative overflow-hidden">
         {/* Decorative Element */}
-        <div className="absolute top-0 right-0 p-2 opacity-5">
-          <BookOpen size={80} />
+        <div className="absolute top-0 right-0 p-4 opacity-[0.05] text-duo-yellow">
+          <BookOpen size={100} strokeWidth={3} />
         </div>
 
-        <h4 className="text-zen-gold font-serif font-bold mb-4 flex items-center gap-2 text-base">
-          <Sparkles size={16} /> 修行统计
+        <h4 className="text-duo-yellow font-black mb-5 flex items-center gap-2 text-base uppercase tracking-widest">
+          <Sparkles size={18} strokeWidth={3} /> 修行统计
         </h4>
-        <div className="grid grid-cols-2 gap-6 relative z-10">
-          <div className="space-y-0.5">
-            <div className="text-2xl font-serif font-bold text-zen-text">0</div>
-            <div className="text-[9px] text-zen-text/40 tracking-[0.15em] uppercase">累计功课 (次)</div>
+        <div className="grid grid-cols-2 gap-8 relative z-10">
+          <div className="space-y-1">
+            <div className="text-3xl font-black text-duo-text">0</div>
+            <div className="text-[10px] text-amber-900/40 font-black uppercase tracking-wider">累计功课 (次)</div>
           </div>
-          <div className="space-y-0.5">
-            <div className="text-2xl font-serif font-bold text-zen-text">0</div>
-            <div className="text-[9px] text-zen-text/40 tracking-[0.15em] uppercase">修行时长 (分)</div>
+          <div className="space-y-1">
+            <div className="text-3xl font-black text-duo-text">0</div>
+            <div className="text-[10px] text-amber-900/40 font-black uppercase tracking-wider">修行时长 (分)</div>
           </div>
         </div>
       </div>

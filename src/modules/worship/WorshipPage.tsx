@@ -156,53 +156,44 @@ export const WorshipPage = () => {
       </button>
 
       {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-serif font-bold text-zen-text tracking-widest">许愿</h1>
-        <div className="inline-flex items-center gap-2 px-4 py-1 bg-zen-gold/10 rounded-full">
-          <span className="text-xs text-zen-text/60">累积功德</span>
-          <span className="text-zen-gold font-bold text-lg">{totalMerit}</span>
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-black text-duo-text tracking-tight drop-shadow-sm">诚心祈愿</h1>
+        <div className="inline-flex items-center gap-3 px-8 py-3 bg-white rounded-2xl border-2 border-duo-yellow/20 shadow-[0_4px_0_0_#FFB800]">
+          <span className="text-xs font-black text-amber-900/40 uppercase tracking-widest">当前功德</span>
+          <span className="text-duo-yellow font-black text-3xl">{totalMerit}</span>
         </div>
       </div>
 
       {/* Buddha Image Display with Swipe */}
       <div 
-        className="relative w-full flex items-center justify-center flex-shrink-0"
+        className="relative w-full flex items-center justify-center flex-shrink-0 py-4"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
         {/* Left Arrow */}
         <button 
           onClick={handlePrevBuddha}
-          className="absolute left-2 z-20 p-2 text-zen-gold/60 hover:text-zen-gold transition-colors"
+          className="absolute left-2 z-20 p-2 text-amber-200 hover:text-duo-yellow transition-colors"
         >
-          <ChevronLeft size={36} strokeWidth={2.5} />
+          <ChevronLeft size={44} strokeWidth={3} />
         </button>
 
         {/* Buddha Image Container */}
-        <div className="relative w-72 h-72 flex items-center justify-center">
-          {/* Ripple Wave Effect - 向外扩散的水波 */}
-          <div className="ripple-container">
-            <div className="ripple-wave" />
-            <div className="ripple-wave" />
-            <div className="ripple-wave" />
-            <div className="ripple-wave" />
-            <div className="ripple-wave" />
-          </div>
-          
-          <div className="relative w-44 h-44 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-inner border border-white/50 overflow-hidden z-10">
+        <div className="relative w-80 h-80 flex items-center justify-center">
+          <div className="relative w-60 h-60 bg-white/50 rounded-full flex items-center justify-center border-4 border-white shadow-[inset_0_4px_10px_rgba(0,0,0,0.05)] z-10 overflow-visible">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={selectedBuddha.name}
-                initial={{ opacity: 0, x: slideDirection * 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -slideDirection * 100 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, scale: 0.8, x: slideDirection * 100 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.8, x: -slideDirection * 100 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <img 
                   src={selectedBuddha.image} 
                   alt={selectedBuddha.name}
-                  className="w-80 h-80 object-contain drop-shadow-md"
+                  className="w-80 h-80 object-contain drop-shadow-xl"
                 />
               </motion.div>
             </AnimatePresence>
@@ -212,10 +203,10 @@ export const WorshipPage = () => {
               {merits.map((m) => (
                 <motion.div
                   key={m.id}
-                  initial={{ opacity: 0, y: 20, x: m.x }}
-                  animate={{ opacity: 1, y: m.y }}
-                  exit={{ opacity: 0 }}
-                  className="absolute text-zen-gold font-bold text-xl pointer-events-none whitespace-nowrap z-10"
+                  initial={{ opacity: 0, scale: 0.5, y: 20, x: m.x }}
+                  animate={{ opacity: 1, scale: 1.2, y: m.y }}
+                  exit={{ opacity: 0, scale: 1.5 }}
+                  className="absolute text-duo-yellow font-black text-2xl pointer-events-none whitespace-nowrap z-20 drop-shadow-sm"
                 >
                   功德 +1
                 </motion.div>
@@ -227,20 +218,20 @@ export const WorshipPage = () => {
         {/* Right Arrow */}
         <button 
           onClick={handleNextBuddha}
-          className="absolute right-2 z-20 p-2 text-zen-gold/60 hover:text-zen-gold transition-colors"
+          className="absolute right-2 z-20 p-2 text-amber-200 hover:text-duo-yellow transition-colors"
         >
-          <ChevronRight size={36} strokeWidth={2.5} />
+          <ChevronRight size={44} strokeWidth={3} />
         </button>
       </div>
 
       {/* Buddha Name and Tags */}
-      <div className="flex items-center gap-2 -mt-2">
-        <div className="text-zen-text font-serif text-lg tracking-widest">{selectedBuddha.name}</div>
-        <div className="flex gap-1">
+      <div className="flex flex-col items-center gap-3 -mt-2">
+        <div className="text-duo-text font-black text-2xl">{selectedBuddha.name}</div>
+        <div className="flex gap-2">
           {selectedBuddha.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 text-[10px] bg-zen-gold/15 text-zen-gold rounded-full border border-zen-gold/20"
+              className="px-5 py-2 text-xs font-black bg-white text-duo-yellow rounded-2xl border-2 border-duo-yellow/20 shadow-[0_2px_0_0_rgba(255,184,0,0.2)] uppercase tracking-wide"
             >
               {tag}
             </span>
@@ -249,17 +240,17 @@ export const WorshipPage = () => {
       </div>
 
       {/* Wish Input Section */}
-      <div className="w-full zen-card p-5 space-y-4">
-        <div className="space-y-2">
-          <label className="text-xs font-medium text-zen-text/40 ml-1">所求心愿</label>
+      <div className="w-full duo-card p-6 space-y-5">
+        <div className="space-y-3">
+          <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">祈愿内容</label>
           <textarea
             value={wish}
             onChange={(e) => setWish(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
             placeholder="诚心祈愿，万事顺遂..."
-            className={`w-full bg-zen-bg/50 border-none rounded-xl p-3 text-sm text-zen-text placeholder:text-zen-text/20 focus:ring-1 focus:ring-zen-gold/30 resize-none transition-all duration-300 ${
-              isInputFocused ? 'h-24' : 'h-10'
+            className={`w-full bg-amber-50/50 border-2 border-amber-100/50 rounded-2xl p-4 text-sm font-bold text-duo-text placeholder:text-amber-900/20 focus:border-duo-yellow/30 focus:bg-white outline-none transition-all duration-300 ${
+              isInputFocused ? 'h-28 shadow-inner' : 'h-14'
             }`}
             rows={isInputFocused ? 3 : 1}
             disabled={wishExhausted}
@@ -271,12 +262,12 @@ export const WorshipPage = () => {
                 key={index}
                 onClick={() => !wishExhausted && setWish(presetWish)}
                 disabled={wishExhausted}
-                className={`px-3 py-1.5 text-xs rounded-full transition-all whitespace-nowrap flex-shrink-0 ${
+                className={`px-4 py-2 text-xs font-black rounded-xl transition-all whitespace-nowrap flex-shrink-0 border-2 ${
                   wishExhausted
-                    ? 'bg-zen-text/5 text-zen-text/20 cursor-not-allowed'
+                    ? 'bg-amber-50/20 text-amber-900/20 border-amber-100/20 cursor-not-allowed'
                     : wish === presetWish
-                      ? 'bg-zen-gold/20 text-zen-gold border border-zen-gold/30'
-                      : 'bg-zen-bg/60 text-zen-text/60 hover:bg-zen-gold/10 hover:text-zen-gold border border-transparent'
+                      ? 'bg-amber-50 text-duo-yellow border-duo-yellow/20'
+                      : 'bg-white text-amber-900/40 border-amber-100/50 hover:border-duo-yellow/20 hover:text-duo-yellow'
                 }`}
               >
                 {presetWish}
@@ -288,55 +279,44 @@ export const WorshipPage = () => {
         <button
           onClick={handleWorship}
           disabled={wishExhausted}
-          className={`w-full py-3.5 rounded-full font-bold text-base flex items-center justify-center gap-2 transition-all ${
+          className={`w-full py-5 rounded-[24px] font-black text-xl flex items-center justify-center gap-4 transition-all ${
             wishExhausted
-              ? 'bg-zen-text/5 text-zen-text/20 cursor-not-allowed'
-              : 'zen-btn-gold'
+              ? 'bg-amber-100/50 text-amber-900/20 border-b-6 border-amber-200 cursor-not-allowed translate-y-[6px]'
+              : 'duo-btn-yellow'
           }`}
         >
-          {wishExhausted ? '今日祈愿已圆满' : (
+          {wishExhausted ? '今日已圆满' : (
             <>
-              <Sparkles size={18} />
-              <span>祈愿礼拜 ({MAX_DAILY_WISHES - dailyData.wishCount}/{MAX_DAILY_WISHES})</span>
+              <Sparkles size={22} strokeWidth={3} />
+              <span className="uppercase tracking-wider">祈愿礼拜 ({MAX_DAILY_WISHES - dailyData.wishCount}/{MAX_DAILY_WISHES})</span>
             </>
           )}
         </button>
 
         {/* 快捷入口 */}
-        <div className="flex justify-center gap-6 pt-2">
-          <button
-            disabled
-            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
-          >
-            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
-              <span className="text-xl">🪔</span>
-            </div>
-            <span className="text-[10px] text-zen-text/60">请香</span>
-          </button>
-          <button
-            disabled
-            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
-          >
-            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
-              <span className="text-xl">🙏</span>
-            </div>
-            <span className="text-[10px] text-zen-text/60">功德</span>
-          </button>
-          <button
-            disabled
-            className="flex flex-col items-center gap-1.5 opacity-50 cursor-not-allowed"
-          >
-            <div className="w-12 h-12 rounded-full bg-zen-gold/10 border border-zen-gold/20 flex items-center justify-center">
-              <span className="text-xl">💝</span>
-            </div>
-            <span className="text-[10px] text-zen-text/60">募捐</span>
-          </button>
+        <div className="flex justify-around pt-2">
+          {[
+            { icon: '🪔', label: '请香' },
+            { icon: '🙏', label: '功德' },
+            { icon: '💝', label: '募捐' }
+          ].map((item) => (
+            <button
+              key={item.label}
+              disabled
+              className="flex flex-col items-center gap-2 opacity-40 cursor-not-allowed group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-gray-50 border-2 border-gray-100 flex items-center justify-center text-2xl transition-transform group-hover:scale-105">
+                {item.icon}
+              </div>
+              <span className="text-[11px] font-black text-gray-400 uppercase tracking-tighter">{item.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Footer Quote */}
-      <div className="text-center">
-        <p className="text-[10px] text-zen-text/30 font-serif tracking-widest italic">" 心诚则灵 · 随缘自在 "</p>
+      <div className="text-center pt-4">
+        <p className="text-xs font-black text-amber-900/20 uppercase tracking-[0.2em]">" 心诚则灵 · 随缘自在 "</p>
       </div>
     </div>
   )
