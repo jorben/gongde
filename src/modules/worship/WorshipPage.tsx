@@ -304,16 +304,16 @@ export const WorshipPage = () => {
         {/* 快捷入口 */}
         <div className="flex justify-around pt-2">
           {[
-            { icon: '/action/qingxiang.png', label: '请香' },
-            { icon: '/action/gongde.png', label: '功德' },
-            { icon: '/action/mujuan.png', label: '募捐' }
+            { icon: '/action/qingxiang.png', label: '请香', route: '/products/incense' },
+            { icon: '/action/gongde.png', label: '功德', route: '/products/merit' },
+            { icon: '/action/mujuan.png', label: '募捐', route: '/products/donation' }
           ].map((item) => (
             <button
               key={item.label}
-              disabled
-              className="flex flex-col items-center gap-2 opacity-60 cursor-not-allowed group"
+              onClick={() => navigate(item.route)}
+              className="flex flex-col items-center gap-2 group"
             >
-              <div className="w-14 h-14 rounded-full bg-amber-50/50 border-2 border-amber-100 overflow-hidden transition-transform group-hover:scale-105">
+              <div className="w-14 h-14 rounded-full bg-amber-50/50 border-2 border-amber-100 overflow-hidden transition-transform group-hover:scale-105 group-active:scale-95">
                 <img src={item.icon} alt={item.label} className="w-full h-full object-cover" />
               </div>
               <span className="text-[11px] font-black text-amber-900/70 uppercase tracking-tighter">{item.label}</span>
